@@ -28,16 +28,24 @@ namespace lab_6
             {
                 throw new ArgumentException("The sides of the triangle do not form a triangle.");
             }
-            // Выбор стратегии в зависимости от треугольника
-            if (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a)
+
+            if (_strategy == null)
             {
-                ITriangleAreaStrategy strategy = new RightTriangleAreaStrategy();
-                return strategy.CalculateArea(a, b, c);
+                // Выбор стратегии в зависимости от треугольника
+                if (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a)
+                {
+                    ITriangleAreaStrategy strategy = new RightTriangleAreaStrategy();
+                    return strategy.CalculateArea(a, b, c);
+                }
+                else
+                {
+                    ITriangleAreaStrategy strategy = new HeronTriangleAreaStrategy();
+                    return strategy.CalculateArea(a, b, c);
+                }
             }
             else
             {
-                ITriangleAreaStrategy strategy = new HeronTriangleAreaStrategy();
-                return strategy.CalculateArea(a, b, c);
+                return _strategy.CalculateArea(a, b, c);
             }
         }
     }
